@@ -1,0 +1,21 @@
+all: provaOrdDynLib
+
+provaOrdDynLib: vettore.o algord.so provaOrd.o
+	g++ -o provaOrdDynLib provaOrd.o -L./ -lalgord
+
+algord.so: alg_ord.o vettore.o
+	g++ -shared -Wl,-soname,libalgord.so -o libalgord.so alg_ord.o vettore.o
+
+alg_ord.o: alg_ord.cpp alg_ord.h
+	g++ -fpic -c alg_ord.cpp
+
+vettore.o: vettore.cpp vettore.h
+	g++ -fpic -c vettore.cpp
+
+provaOrd.o: provaOrd.cpp vettore.h alg_ord.h
+	g++ -c provaOrd.cpp
+
+clean:
+	rm -f *.o
+	rm -f ./provaOrdDynLib
+	rm -f ./libalgord.so

@@ -1,0 +1,24 @@
+CC = gcc
+CFLAGS = -c -g
+LDFLAGS = 
+DEPS = mylib.h
+OBJ = mylib.o main.o
+BIN = programma
+
+all: $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -o $@ $<
+
+clean:
+	rm -f *.o
+	rm -f $(BIN)
+
+# Variabili speciali
+# $@ = il target della regola
+# $^ = la lista delle dipendenze
+# $< = la prima dipendenza
+
