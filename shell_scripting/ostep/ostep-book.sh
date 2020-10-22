@@ -29,7 +29,7 @@ do
 
 done | tee toc.txt
 
-java -jar ./jpdfbookmarks-2.5.2/jpdfbookmarks.jar  --apply toc.txt --out OSTEP-book.pdf output.pdf
+java -jar ./jpdfbookmarks-2.5.2/jpdfbookmarks.jar  --apply toc.txt --out OSTEP.pdf output.pdf
 
 
 rm -f OSTEP-*.pdf
