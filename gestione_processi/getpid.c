@@ -3,7 +3,8 @@
 
 int main(void)
 {
- 	int pid, ppid;
+ 	pid_t pid, ppid;
+
  	pid = getpid();
  	printf("Sono il processo pid = %d\n", pid);
  
