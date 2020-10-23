@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 wget -q -r --no-parent -nH --cut-dirs=3 \
 		https://people.sc.fsu.edu/~jburkardt/data/jpg/
