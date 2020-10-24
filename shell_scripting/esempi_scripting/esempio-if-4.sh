@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 wget -q http://www.hoepliscuola.it/download/non-esiste.txt
 

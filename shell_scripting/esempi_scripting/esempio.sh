@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 wget -q http://www.hoepliscuola.it/download/2842/la-divina-commedia.txt
 
