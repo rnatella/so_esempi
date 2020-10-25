@@ -1,0 +1,39 @@
+BANKER'S ALGORITHM EXAMPLE
+
+RESOURCES:
+
+Memory: 100
+Logfile: 1
+Serial port: 1
+
+
+CLAIMS:
+
+P1: 70 Memory, 1 Serial
+P2: 70 Memory, 1 Serial
+P3: 50 Memory, 1 Logfile
+
+
+EXECUTION SEQUENCES:
+
+P1: alloc(40 Memory)
+P1: ...work... (5 seconds)
+P1: alloc(30 Memory)
+P1: alloc(1 Serial)
+P1: ...work... (5 seconds)
+P1: exit
+
+P2: ...work... (1 second)
+P2: alloc(40 Memory)
+P2: ...work... (5 seconds)
+P2: alloc(30 Memory)
+P2: alloc(1 Serial)
+P2: ...work... (5 seconds)
+P2: exit
+
+P3: alloc(10 Memory)
+P3: ...work... (4 seconds)
+P3: alloc(40 Memory)
+P3: alloc(1 Logfile)
+P3: ...work... (4 seconds)
+P3: exit
