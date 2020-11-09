@@ -8,6 +8,7 @@
 #include <sys/shm.h>
 #include <stdio.h>
 #include <unistd.h>
+
 #include "monitor_signal_continue.h"
 
 
@@ -93,7 +94,7 @@ void remove_monitor(Monitor* M){
     shmctl(M->id_shared,IPC_RMID,0);
 
 #ifdef DEBUG_
-    printf(" \n Il Monitor è stato rimosso ! Arrivederci \n", getpid());
+    printf(" \n Il Monitor è stato rimosso ! Arrivederci \n");
 #endif
 
 }

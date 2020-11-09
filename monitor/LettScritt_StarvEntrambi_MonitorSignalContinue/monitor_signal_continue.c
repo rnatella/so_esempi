@@ -8,6 +8,7 @@
 #include <sys/shm.h>
 #include <stdio.h>
 #include <unistd.h>
+
 #include "monitor_signal_continue.h"
 
 
@@ -93,7 +94,7 @@ void remove_monitor(Monitor* M){
     shmctl(M->id_shared,IPC_RMID,0);
 
 #ifdef DEBUG_
-    printf(" \n Il Monitor è stato rimosso ! Arrivederci \n", getpid());
+    printf(" \n Il Monitor è stato rimosso ! Arrivederci \n");
 #endif
 
 }
@@ -155,15 +156,6 @@ void signal_condition(Monitor* M,int id_var){
 
 }
 
-void signal_all(Monitor* M, int id_var) {
-	while (M->cond_counts[id_var] > 0) {
-		M->cond_counts[id_var]--;
-		#ifdef DEBUG_
-    		printf("<%d> -Monitor- signal sul semaforo %d\n", getpid(), id_var);
-		#endif
-		Signal_Sem(M->id_conds,id_var);
-	}
-}
 
 int queue_condition(Monitor * M, int id_var){
 	return M->cond_counts[id_var];
