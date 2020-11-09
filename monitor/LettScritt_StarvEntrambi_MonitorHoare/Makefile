@@ -7,7 +7,7 @@ main.o: main.c procedure.h
 procedure.o: procedure.c procedure.h
 	gcc -o procedure.o -c   procedure.c
 
-monitor.o: monitor_hoare.c monitor_hoare.h
+monitor_hoare.o: monitor_hoare.c monitor_hoare.h
 	gcc -o monitor_hoare.o -c   monitor_hoare.c
 
 clean:
