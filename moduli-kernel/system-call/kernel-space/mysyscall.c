@@ -1,15 +1,18 @@
 #include <linux/sched.h>
 #include <linux/kernel.h>
 #include <linux/uaccess.h>
+#include <linux/syscalls.h>
 
-asmlinkage long sys_mysyscall(pid_t pid, char * buffer, unsigned int buf_size) {
+SYSCALL_DEFINE3(mysyscall, long, pid, char __user *, buffer, long, buf_size)
+{
 
         struct task_struct * mytask;
         char * nome_processo;
 
-        printk(KERN_DEBUG "System call trova-processo\n");
+        printk(KERN_DEBUG "System call trova-processo (%d, %p, %d)\n", pid, buffer, buf_size);
 
         mytask = find_task_by_vpid(pid);	 // ricerca del process control block, in base al PID
+	//mytask = get_pid_task(find_vpid(pid), PIDTYPE_TGID);
 
         if(!mytask) {
                 printk(KERN_DEBUG "Processo non trovato: %d\n", pid);	      // find_task_by_vpid è fallita
