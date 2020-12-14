@@ -5,7 +5,7 @@
 
 #define __NR_mysyscall 335
 
-long mysyscall(long pid, char * buffer, long buf_size) {
+long mysyscall(pid_t pid, char * buffer, size_t buf_size) {
 
         return  syscall(__NR_mysyscall, pid, buffer, buf_size);
 }
