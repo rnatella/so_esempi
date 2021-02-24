@@ -3,10 +3,9 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 
-// NOTA: 548 è il primo syscall number disponibile in Linux 4.13
-#define __NR_mysyscall 548
+#define __NR_mysyscall 335
 
-long mysyscall(pid_t pid, char * buffer, unsigned int buf_size) {
+long mysyscall(pid_t pid, char * buffer, size_t buf_size) {
 
         return  syscall(__NR_mysyscall, pid, buffer, buf_size);
 }
