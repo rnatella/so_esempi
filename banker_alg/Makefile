@@ -1,5 +1,5 @@
 banker: main.cc banker.cc banker.h
-	g++ -lpthread -g -o banker main.cc
+	g++ -pthread -g -o banker main.cc
 
 clean:
 	rm banker
