@@ -1,12 +1,12 @@
-all: esempio esempio-corretto
+all: array printsum
 
-esempio: esempio.c
-	gcc -g esempio.c -o esempio
+array: array.c
+	gcc -g array.c -o array
 
-esempio-corretto: esempio-corretto.c
-	gcc -g esempio-corretto.c -o esempio-corretto
+printsum: printsum.c
+	gcc -g printsum.c -o printsum
 
 clean:
-	rm -f esempio
-	rm -f esempio-corretto
+	rm -f array
+	rm -f printsum
 	rm -f core

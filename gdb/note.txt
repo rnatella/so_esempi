@@ -1,7 +1,0 @@
-Per evitare i messaggi di errore di GDB che si riferiscono ai sorgenti della Libreria C (es. "vfscanf-internal.c: File o directory non esistente."), installare i sorgenti della libreria.
-
-sudo apt-get install libc6-dbg
-sudo apt-get install glibc-source
-cd /usr/src/glibc && sudo tar xvf eglibc-2.31.tar.xz
-(gdb) dir /usr/src/glibc/glibc-2.31/stdio-common
-

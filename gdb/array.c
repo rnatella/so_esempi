@@ -7,7 +7,7 @@ int tester(int* c, int k) {
 
 int main(int argc, char* argv[]) {
 	int i, k = 0;
-	int x[10000];
+	int x[1000];
 
 	for(i = 0; i < 10000; ++i){
 		x[i] = i;
