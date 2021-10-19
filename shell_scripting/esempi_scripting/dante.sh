@@ -1,6 +1,8 @@
 #!/bin/bash
 
-wget -q http://www.hoepliscuola.it/download/2842/la-divina-commedia.txt
+URL=http://www.mirrorservice.org/sites/ftp.ibiblio.org/pub/docs/books/gutenberg/1/0/1/1012/1012-0.txt
+
+wget -q $URL -O la-divina-commedia.txt
 
 echo "Il numero di linee della Divina Commedia è circa:"
 cat la-divina-commedia.txt | wc -l
