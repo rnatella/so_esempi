@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget -q http://www.hoepliscuola.it/download/non-esiste.txt
+wget -q http://www.gutenberg.org/non-esiste.txt
 
 if [ $? -ne 0 ]
 then
