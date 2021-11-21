@@ -1,19 +1,19 @@
-				/*-----HEADER FILE----*/
 #ifndef __HEADER
 #define __HEADER
+
 #define MESSAGGIO 1
 
-typedef char msg [40];
-
 typedef struct {
-		long tipo;
-		msg mess;
+	long tipo;
+	char mess[40];
 } Messaggio;
 
-void Produttore(int queue,char* m);
+void Produttore(int queue);
 void Consumatore(int queue);
+
+void SendAsincr(int queue, char * text);
+void Receive(int queue, char * text);
 void printMsgInfo(int queue);
+
 #endif
-
-
 
