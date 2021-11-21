@@ -4,18 +4,16 @@
 #define OK_TO_SEND 2
 #define MESSAGGIO 3
 
-typedef char msg [40];
-
 typedef struct {
-		long tipo;
-		msg mess;
-		} Messaggio;
+	long tipo;
+	char mess[40];
+} Messaggio;
 
-void ReceiveBloc (Messaggio *, int,int);
-void SendSincr (Messaggio *, int);
+void ReceiveBloc (int queue, char * text);
+void SendSincr (int queue, char * text);
 void initServiceQueues();
 void removeServiceQueues();
 
-void Produttore(int queue, char *);
+void Produttore(int queue);
 void Consumatore(int queue);
 

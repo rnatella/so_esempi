@@ -1,5 +1,3 @@
-			/*-----IMPLEMENTAZIONE DELLE PROCEDURE-----*/
-
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -10,64 +8,67 @@
 #include <sys/ipc.h>
 #include "header.h"
 
-static int queue1;//statiche-->non Ë necessaria la loro visibilit‡ fuori dal modulo
-static int queue2;
-
+static int queue_rts; // "static" poich√® non √® necessaria la loro visibilit√† fuori dal modulo
+static int queue_ots;
 
 // inizializzazione code di servizio
 void initServiceQueues(){
 
-     	queue1=msgget(IPC_PRIVATE,IPC_CREAT|0664);
-	queue2=msgget(IPC_PRIVATE,IPC_CREAT|0664);
+	queue_rts = msgget(IPC_PRIVATE,IPC_CREAT|0664);
+	queue_ots = msgget(IPC_PRIVATE,IPC_CREAT|0664);
 }
 
 // rimozione code di servizio
 void removeServiceQueues(){
-	msgctl(queue1,IPC_RMID,0);
-	msgctl(queue2,IPC_RMID,0);
+
+	msgctl(queue_rts,IPC_RMID,0);
+	msgctl(queue_ots,IPC_RMID,0);
 }
 
 // Send Sincrona
-void SendSincr (Messaggio *m , int queue){
-	Messaggio m1,m2;
+void SendSincr (int queue, char * text){
+
+	Messaggio m, m_rts, m_ots;
+
 	// costruzione messaggio RTS
-	m1.tipo=REQUEST_TO_SEND;
-	strcpy(m1.mess,"Richiesta di invio");
+	m_rts.tipo=REQUEST_TO_SEND;
+	strcpy(m_rts.mess,"Richiesta di invio");
+
 	// invio messaggio RTS
-	msgsnd(queue1,&m1,sizeof(Messaggio)-sizeof(long),0);	
+	msgsnd(queue_rts, &m_rts, sizeof(Messaggio)-sizeof(long), 0);
+
 	// ricezione OTS
-	msgrcv(queue2,&m2,sizeof(Messaggio)-sizeof(long),OK_TO_SEND,0);
+	msgrcv(queue_ots, &m_ots, sizeof(Messaggio)-sizeof(long), OK_TO_SEND, 0);
+
+
+	// costruzione del messaggio da trasmettere
+	m.tipo=MESSAGGIO;
+	strcpy(m.mess,text);
+
 	// invio messaggio
-	msgsnd(queue,m,sizeof(Messaggio)-sizeof(long),0);
+	msgsnd(queue, &m, sizeof(Messaggio)-sizeof(long), 0);
 }
 
 // Receive Bloccante
-void ReceiveBloc (Messaggio *m, int queue, int tipomess){
-	Messaggio m1,m2;	// ricezione messaggio RTS
-	msgrcv(queue1,&m1,sizeof(Messaggio)-sizeof(long),REQUEST_TO_SEND,0);	// costruzione messaggio OTS
-	m2.tipo=OK_TO_SEND;
-	strcpy(m2.mess,"Ready to send");
+void ReceiveBloc (int queue, char * text){
+
+	Messaggio m, m_rts, m_ots;
+
+	// attende RTS
+	msgrcv(queue_rts, &m_rts, sizeof(Messaggio)-sizeof(long), REQUEST_TO_SEND, 0);
+
+	// costruzione messaggio OTS
+	m_ots.tipo=OK_TO_SEND;
+	strcpy(m_ots.mess,"Pronto all'invio");
+
 	// invio messaggio OTS
-	msgsnd(queue2,&m2,sizeof(Messaggio)-sizeof(long),0);
+	msgsnd(queue_ots, &m_ots, sizeof(Messaggio)-sizeof(long), 0);
+
+
 	// ricezione messaggio
-	msgrcv(queue,m,sizeof(Messaggio)-sizeof(long),tipomess,0);
-}
+	msgrcv(queue, &m, sizeof(Messaggio)-sizeof(long), 0, 0);
 
-void Produttore(int queue, char * text) {
-	Messaggio m;
-	// costruzione del messaggio da trasmettere
-	m.tipo=MESSAGGIO;
-	strcpy(m.mess,text); 
-	// invio messaggio
-	SendSincr(&m,queue);
-	printf("MESSAGGIO INVIATO: <%s>\n",m.mess);
+	// restituzione della stringa al chiamante
+	strcpy(text, m.mess);
 }
-
-void Consumatore(int queue) {
-	Messaggio m;
-	// ricezione messaggio
-	ReceiveBloc(&m,queue,MESSAGGIO);
-	printf("MESSAGGIO RICEVUTO: <%s>\n",m.mess);
-}
-
 

@@ -28,44 +28,74 @@
 
 int main(){
 
-	int k,status,queue;
+	int k;
+	int queue;
 	pid_t pid;
 
-	// assegnazione coda di comunicazione
-	queue=msgget(IPC_PRIVATE,IPC_CREAT|0664);
+	// creazione della coda principale (dati prodotti/consumati)
+	queue = msgget(IPC_PRIVATE,IPC_CREAT|0664);
 
-	// inizializzazione code di servizio
+	// creazione delle code di supporto alla send sincrona (RTS/OTS)
 	initServiceQueues();
 
-	// generazione produttore e consumatore
-	pid=fork();
-	if (pid==0)  {			//processo figlio (produttore)
-		printf("sono il produttore. Il mio pid %d \n",getpid());
-		sleep(2);
-		Produttore(queue,"www.unina.it");
-		_exit(0);
-	} else {
-		pid=fork();		//genera il secondo figlio (consumatore)
-	 	if (pid==0){
-			printf("sono il figlio consumatore. Il mio pid %d \n",getpid());
-			sleep(1);
-        		Consumatore(queue);
-			_exit(0);
-		}
+	pid = fork();		// primo figlio (produttore)
+
+	if (pid == 0) {
+
+		printf("Sono il produttore. Il mio pid %d \n",getpid());
+
+		Produttore(queue);
+
+		exit(0);
+	}
+
+
+	pid = fork();		// secondo figlio (consumatore)
+
+	if (pid==0) {
+
+		printf("Sono il figlio consumatore. Il mio pid %d \n",getpid());
+
+		Consumatore(queue);
+
+		exit(0);
 	}
 
 	// attesa di terminazione
 	for (k=0; k<2;k++){
-		pid=wait(&status);
-		if (pid==-1)
-			perror("errore");
-		else
-			printf ("Figlio n.ro %d e\' morto con status= %d\n",pid,status>>8);
+		wait(NULL);
 	}
 
 	// deallocazione code
 	msgctl(queue,IPC_RMID,0);
 	removeServiceQueues();
-	
-	return 1;
+
+	return 0;
+}
+
+void Produttore(int queue) {
+
+	char messaggio[] = "www.unina.it";
+
+	// invio messaggio
+	printf("Il produttore chiama la send sincrona...\n");
+	SendSincr(queue, messaggio);
+
+	printf("MESSAGGIO INVIATO: <%s>\n", messaggio);
+}
+
+void Consumatore(int queue) {
+
+	char messaggio[40];
+
+	// simula un consumatore ancora occupato
+	sleep(1);
+	printf("Il consumatore è occupato...\n");
+	sleep(4);
+	printf("Il consumatore è pronto...\n");
+
+	// ricezione messaggio
+	ReceiveBloc(queue, messaggio);
+
+	printf("MESSAGGIO RICEVUTO: <%s>\n", messaggio);
 }
