@@ -12,6 +12,7 @@ int main(int argc, char * argv[])
 	{
 		block = (void *) malloc(MEGABYTE);
 		if (!(block)) break;
+		// il blocco rimane inutilizzato
 		printf("Currently allocating %d MB\n", ++count);
 	}
 	printf("Done\n");

@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<malloc.h>
 
 #define PRIME1 130027
 #define PRIME2 130043
