@@ -13,17 +13,21 @@ long mysyscall(pid_t pid, char * buffer, size_t buf_size) {
 int main() {
 
         long err;
-        char nomeprocesso[16];
+        char buf_nomeprocesso[16];
 
-        printf("Invocazione myscall()\n");
-        err = mysyscall( getpid(), nomeprocesso, 16 );
+	pid_t pid;
+	printf("Inserisci il PID di un processo: ");
+	scanf("%d", &pid);
+
+        printf("Invocazione mysyscall(%d, buffer, buf_size)\n", pid);
+        err = mysyscall( pid, buf_nomeprocesso, sizeof(buf_nomeprocesso) );
 
         if(err) {
                 perror("mysyscall fallita");
                 return -1;
         }
 
-        printf("Risultato mysyscall: %s\n", nomeprocesso);
+        printf("Risultato mysyscall: %s\n", buf_nomeprocesso);
 
         return 0;
 }

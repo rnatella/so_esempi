@@ -9,6 +9,8 @@
 #include <linux/sched.h>
 #include <asm/uaccess.h>	/* for put_user */
 
+MODULE_LICENSE("GPL");
+
 /*  
  *  Prototypes - this would normally go in a .h file
  */
