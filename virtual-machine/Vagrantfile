@@ -1,9 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# $ vagrant plugin install vagrant-vbguest
-# $ vagrant up
-
 VM_NAME = 'Corso-SO-2022'
 VM_BOX  = 'ubuntu/jammy64'
 
