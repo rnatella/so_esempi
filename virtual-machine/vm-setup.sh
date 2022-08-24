@@ -64,6 +64,8 @@ apt-get install -y fonts-ubuntu \
                    gedit \
                    gnome-system-monitor \
                    gnome-logs \
+                   eog \
+                   eog-plugins \
                    teams-for-linux
 
 rm /usr/share/applications/display-im6*.desktop
