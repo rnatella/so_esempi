@@ -73,6 +73,11 @@ rm /usr/share/applications/display-im6*.desktop
 snap install snap-store
 
 
+# Annotate default wallpaper with text
+cp /usr/share/backgrounds/warty-final-ubuntu.png /usr/share/backgrounds/warty-final-ubuntu-orig.png
+convert -pointsize 96 -fill "#FFFFFF" -gravity SouthWest -annotate +300+100 "VM Corso SO\nusername: so\npassword: so" /usr/share/backgrounds/warty-final-ubuntu-orig.png  /usr/share/backgrounds/warty-final-ubuntu.png
+
+
 # Install basic web development and hacking tools
 apt-get install -y php-cli \
                    python3-pip \
