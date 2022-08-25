@@ -38,7 +38,10 @@ apt-get install -y gcc-multilib g++-multilib \
                    man-db \
                    manpages-posix \
                    manpages-dev \
-                   manpages-posix-dev
+                   manpages-posix-dev \
+                   llvm \
+                   lldb \
+                   clang
 
 
 # Install misc Ubuntu apps
