@@ -33,7 +33,7 @@ VB_UUID=`cat .vagrant/machines/default/virtualbox/id`
 
 
 # Cleanup
-vagrant ssh -c 'bash /home/vagrant/ova-cleanup.sh'
+vagrant ssh -c 'bash /vagrant/ova-cleanup.sh'
 sleep 5
 VBoxManage controlvm ${VB_UUID} acpipowerbutton
 wait_vm_shutdown ${VB_UUID}
