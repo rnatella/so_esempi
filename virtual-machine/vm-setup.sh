@@ -66,7 +66,8 @@ apt-get install -y fonts-ubuntu \
                    net-tools \
                    network-manager \
                    network-manager-gnome \
-                   openjdk-11-jdk pdftk-java \
+                   openjdk-11-jdk \
+                   pdftk-java \
                    imagemagick \
                    python3-tk \
                    jq \
@@ -120,6 +121,8 @@ pip3 install pwntools
 # Install Visual Studio Code and its C/C++ extension
 snap install --classic code
 su - so -c 'code --install-extension ms-vscode.cpptools'
+
+# Default settings for Visual Studio Code (hide ".vscode" folder, disable workspace trust)
 su - so -c 'mkdir -p /home/so/.config/Code/User && cd /home/so/.config/Code/User && jq -r '"'"'."security.workspace.trust.enabled" |= false'"'"' settings.json > settings.json.tmp && jq -r '"'"'."files.exclude" |= { "**/.vscode": true }'"'"' settings.json.tmp > settings.json.tmp && mv settings.json.tmp settings.json'
 
 
@@ -131,6 +134,7 @@ su - so -c 'mkdir -p /home/so/.config/Code/User && cd /home/so/.config/Code/User
 #apt-get update
 #apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
+groupadd docker
 usermod -a -G docker so
 
 
