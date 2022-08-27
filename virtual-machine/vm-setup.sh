@@ -41,7 +41,21 @@ apt-get install -y gcc-multilib g++-multilib \
                    manpages-posix-dev \
                    llvm \
                    lldb \
-                   clang
+                   clang \
+                   glibc-source
+
+#cd /usr/src/glibc
+#tar xf glibc-*.tar.xz
+#GLIBC_SOURCE_DIR=`pwd`/`ls -d */|grep "glibc-"`
+#echo "dir ${GLIBC_SOURCE_DIR}" >> /etc/gdb/gdbinit
+#cd -
+
+
+# GDB will be attached to both processes after a call to fork()
+su - so -c 'echo "set detach-on-fork off" >> /home/so/.gdbinit'
+
+# Set all threads of all processes to be resumed when an execution command is issued
+su - so -c 'echo "set schedule-multiple on" >> /home/so/.gdbinit'
 
 
 # Install misc Ubuntu apps
@@ -106,7 +120,7 @@ pip3 install pwntools
 # Install Visual Studio Code and its C/C++ extension
 snap install --classic code
 su - so -c 'code --install-extension ms-vscode.cpptools'
-su - so -c 'mkdir -p /home/so/.config/Code/User && cd /home/so/.config/Code/User && jq -r '"'"'."security.workspace.trust.enabled" |= false'"'"' settings.json > settings.json.tmp && mv settings.json.tmp settings.json'
+su - so -c 'mkdir -p /home/so/.config/Code/User && cd /home/so/.config/Code/User && jq -r '"'"'."security.workspace.trust.enabled" |= false'"'"' settings.json > settings.json.tmp && jq -r '"'"'."files.exclude" |= { "**/.vscode": true }'"'"' settings.json.tmp > settings.json.tmp && mv settings.json.tmp settings.json'
 
 
 # Install Docker
