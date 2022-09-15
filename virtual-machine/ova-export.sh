@@ -2,7 +2,7 @@
 
 set -xe
 
-VM_NAME="Corso-SO-2022"
+VM_NAME="Ubuntu-SO"
 
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -32,8 +32,11 @@ SSH_PORT=`vagrant port --guest 22 ${VM_TYPE}`
 VB_UUID=`cat .vagrant/machines/default/virtualbox/id`
 
 
+# To set "safe" ACPI shutdown by default for Virtualbox
+VBoxManage setextradata ${VB_UUID} GUI/DefaultCloseAction Shutdown
+
 # Cleanup
-vagrant ssh -c 'bash /vagrant/ova-cleanup.sh'
+vagrant ssh -c 'bash /home/vagrant/ova-cleanup.sh'
 sleep 5
 VBoxManage controlvm ${VB_UUID} acpipowerbutton
 wait_vm_shutdown ${VB_UUID}
@@ -42,12 +45,9 @@ wait_vm_shutdown ${VB_UUID}
 #VBoxManage sharedfolder remove ${VB_UUID} -name "vagrant"
 
 # Remove *-configdrive.vmdk
-#VBoxManage storageattach ${VB_UUID} --storagectl "SCSI" --port 1 --medium none
-#UNUSED_VMDK_UUID=`VBoxManage list  hdds|perl -n -e '$uuid = $1 if(/^UUID:\s+(.+)$/); if(/^Location:\s+(.+)$/) { $location = $1; print "$location,$uuid\n" }' | grep ${VM_NAME} | grep "\-configdrive" | awk -F, '{print $2}'`
-#VBoxManage closemedium  disk ${UNUSED_VMDK_UUID} --delete
-
-# To set "safe" ACPI shutdown by default for Virtualbox
-#VBoxManage setextradata ${VM_NAME} GUI/DefaultCloseAction Shutdown
+VBoxManage storageattach ${VB_UUID} --storagectl "SCSI" --port 1 --medium none
+UNUSED_VMDK_UUID=`VBoxManage list  hdds|perl -n -e '$uuid = $1 if(/^UUID:\s+(.+)$/); if(/^Location:\s+(.+)$/) { $location = $1; print "$location,$uuid\n" }' | grep ${VM_NAME} | grep "\-configdrive" | awk -F, '{print $2}'`
+VBoxManage closemedium  disk ${UNUSED_VMDK_UUID} --delete
 
 rm -f ${VM_NAME}.ova
 VBoxManage export ${VB_UUID} -o ${VM_NAME}.ova

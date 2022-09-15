@@ -1,9 +1,14 @@
 #!/bin/bash
 
+# Disable configuration wizards in apt (use defaults)
+export DEBIAN_FRONTEND=noninteractive
+
+# Create user "so"
 adduser --disabled-password --gecos "" so
 echo "so:so"|chpasswd
 usermod -a -G sudo so
 
+# Install updates
 apt-get update
 apt-get upgrade -y
 
@@ -60,16 +65,11 @@ su - so -c 'echo "set schedule-multiple on" >> /home/so/.gdbinit'
 
 # Install misc Ubuntu apps
 apt-get install -y fonts-ubuntu \
-                   #ttf-ubuntu-font-family \
                    curl \
                    wget \
                    net-tools \
                    network-manager \
                    network-manager-gnome \
-                   openjdk-11-jdk \
-                   pdftk-java \
-                   imagemagick \
-                   python3-tk \
                    jq \
                    firefox \
                    firefox-locale-it \
@@ -83,12 +83,22 @@ apt-get install -y fonts-ubuntu \
                    gnome-system-monitor \
                    gnome-logs \
                    eog \
-                   eog-plugins \
-                   teams-for-linux
+                   eog-plugins
 
-rm /usr/share/applications/display-im6*.desktop
+# was: ttf-ubuntu-font-family
 
 snap install snap-store
+
+snap install teams-for-linux
+
+
+# Misc packages for examples from lectures
+apt-get install -y cgroup-tools \
+                   openjdk-11-jdk \
+                   pdftk-java \
+                   imagemagick \
+                   python3-tk \
+                   mathomatic-primes
 
 
 # Annotate default wallpaper with text
@@ -105,6 +115,7 @@ apt-get install -y php-cli \
                    nmap \
                    sqlmap \
                    wireshark
+
 
 systemctl disable apache2
 systemctl stop apache2
@@ -123,7 +134,17 @@ snap install --classic code
 su - so -c 'code --install-extension ms-vscode.cpptools'
 
 # Default settings for Visual Studio Code (hide ".vscode" folder, disable workspace trust)
-su - so -c 'mkdir -p /home/so/.config/Code/User && cd /home/so/.config/Code/User && jq -r '"'"'."security.workspace.trust.enabled" |= false'"'"' settings.json > settings.json.tmp && jq -r '"'"'."files.exclude" |= { "**/.vscode": true }'"'"' settings.json.tmp > settings.json.tmp && mv settings.json.tmp settings.json'
+#su - so -c 'mkdir -p /home/so/.config/Code/User && cd /home/so/.config/Code/User && touch settings.json && jq -r '"'"'."security.workspace.trust.enabled" |= false'"'"' settings.json > settings.json.tmp && jq -r '"'"'."files.exclude" |= { "**/.vscode": true }'"'"' settings.json.tmp > settings.json.tmp && mv settings.json.tmp settings.json'
+su - so -c 'mkdir -p /home/so/.config/Code/User && touch /home/so/.config/Code/User/settings.json'
+
+cat <<EOF >/home/so/.config/Code/User/settings.json
+{
+    "security.workspace.trust.enabled": false,
+    "files.exclude": {
+        "**/.vscode": true
+    }
+}
+EOF
 
 
 # Install Docker
@@ -184,7 +205,7 @@ perl -p -i -e 's/^(VIDEOS=)/#$1/' /etc/xdg/user-dirs.defaults
 
 
 # Install "dbus-launch" (to change the GNOME settings)
-env DEBIAN_FRONTEND=noninteractive apt-get install -y dbus-x11
+apt-get install -y dbus-x11
 
 
 # Create "shutdown" shortcut on the desktop
@@ -210,6 +231,8 @@ chmod a+x /home/so/Desktop/shutdown.desktop
 # Modify "favorite apps" on the dock bar (on the left)
 su - so -c "dbus-launch gsettings set org.gnome.shell favorite-apps \"['org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'code_code.desktop']\""
 
+rm /usr/share/applications/display-im6*.desktop
+
 
 # Disable the screensaver
 su - so -c "dbus-launch gsettings set org.gnome.desktop.session idle-delay 0"
@@ -219,6 +242,11 @@ su - so -c "dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sl
 # Set region and keyboard layout for GNOME
 su - so -c "dbus-launch gsettings set org.gnome.system.locale region 'it_IT.utf8'"
 su - so -c "dbus-launch gsettings set org.gnome.desktop.input-sources sources \"[('xkb', 'it')]\""
+
+
+# Remove unneeded packages
+apt-get update
+apt-get autoremove -y
 
 
 # Set DHCP for all virtual Ethernet NICs
@@ -254,8 +282,5 @@ perl -p -i -e 's/managed=false/managed=true/' /etc/NetworkManager/NetworkManager
 netplan apply
 
 
-
-apt-get update
-apt-get autoremove -y
 shutdown -r now
 

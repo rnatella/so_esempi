@@ -1,4 +1,7 @@
 .DS_Store
+*.o
 start
 eseguibile
 *.pdf
+.vagrant
+*.ova

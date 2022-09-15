@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VM_NAME = 'Corso-SO-2022'
+VM_NAME = 'Ubuntu-SO'
 VM_BOX  = 'ubuntu/jammy64'
 
 Vagrant.configure(2) do |config|
@@ -18,6 +18,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision :docker
   config.vm.provision :docker_compose
 
+  #config.vbguest.auto_update = false
+
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
     vb.memory = 2048
@@ -31,7 +33,7 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
   end
 
-  config.vm.provision "file", source: "./ova-cleanup.sh", destination: "/vagrant/ova-cleanup.sh"
+  config.vm.provision "file", source: "./ova-cleanup.sh", destination: "/home/vagrant/ova-cleanup.sh"
 
   config.vm.provision "shell", path: "./vm-setup.sh"
 

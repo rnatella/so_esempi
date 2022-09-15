@@ -13,8 +13,8 @@ sudo rm -rf /tmp/*
 time sudo dd if=/dev/zero of=/tmp/zero bs=1M || true
 sync ; sleep 1 ; sync ; sudo rm -f /tmp/zero
 
+sudo rm -f /home/so/.bash_history
 history -c
-rm -f /home/so/.bash_history
 
 # Delete vagrant user
 sudo userdel -r -f vagrant
