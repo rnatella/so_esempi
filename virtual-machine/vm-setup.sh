@@ -30,7 +30,7 @@ update-locale LANG=it_IT.UTF-8 LANGUAGE= LC_MESSAGES= LC_COLLATE= LC_CTYPE=
 # Install guest OS tools for VirtualBox and VMware
 apt-get install -y build-essential
 apt-get install -y linux-headers-$(uname -r)
-apt-get install -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
+apt-get install -y virtualbox-guest-utils virtualbox-guest-x11
 apt-get install -y open-vm-tools open-vm-tools-desktop
 
 
