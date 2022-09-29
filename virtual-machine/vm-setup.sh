@@ -31,6 +31,7 @@ update-locale LANG=it_IT.UTF-8 LANGUAGE= LC_MESSAGES= LC_COLLATE= LC_CTYPE=
 apt-get install -y build-essential
 apt-get install -y linux-headers-$(uname -r)
 apt-get install -y virtualbox-guest-utils virtualbox-guest-x11
+#apt-get install -y virtualbox-dkms virtualbox-guest-additions-iso
 apt-get install -y open-vm-tools open-vm-tools-desktop
 
 
@@ -171,6 +172,17 @@ apt-get install -y powershell
 # Install QEMU and virt-manager
 apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
 
+# Note: disabling libvirtd on boot, because of high CPU consumption
+# https://www.linuxquestions.org/questions/linux-virtualization-and-cloud-90/how-do-i-disable-libvirtd-from-auto-starting-at-boot-and-stay-disabled-4175660392/
+systemctl disable libvirtd
+systemctl disable libvirt-guests
+systemctl stop libvirtd
+
+
+# Install misc Linux debugging tools
+apt-get install -y linux-tools-common
+apt-get install -y linux-tools-$(uname -r)
+
 
 # Install password manager for GIT
 apt-get install -y libsecret-tools libsecret-common libsecret-1-0 libsecret-1-dev
@@ -262,6 +274,8 @@ apt-get autoremove -y
 # https://askubuntu.com/questions/1312096/wired-network-settings-missing-in-ubuntu-desktop-20-10
 # https://serverfault.com/questions/923328/is-there-a-way-to-automatically-add-network-interfaces-to-systemd-networkd-and-o
 # https://askubuntu.com/questions/1373687/automatic-network-card-configuration
+# https://askubuntu.com/questions/71159/network-manager-says-device-not-managed
+# https://askubuntu.com/questions/1290471/ubuntu-ethernet-became-unmanaged-after-update
 rm -f /etc/netplan/*.yaml
 cat <<EOF >/etc/netplan/01-wildcard.yaml
 network:
@@ -279,6 +293,10 @@ network:
 EOF
 
 perl -p -i -e 's/managed=false/managed=true/' /etc/NetworkManager/NetworkManager.conf
+
+echo > /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+
+netplan generate
 netplan apply
 
 

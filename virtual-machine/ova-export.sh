@@ -47,7 +47,10 @@ wait_vm_shutdown ${VB_UUID}
 # Remove *-configdrive.vmdk
 VBoxManage storageattach ${VB_UUID} --storagectl "SCSI" --port 1 --medium none
 UNUSED_VMDK_UUID=`VBoxManage list  hdds|perl -n -e '$uuid = $1 if(/^UUID:\s+(.+)$/); if(/^Location:\s+(.+)$/) { $location = $1; print "$location,$uuid\n" }' | grep ${VM_NAME} | grep "\-configdrive" | awk -F, '{print $2}'`
-VBoxManage closemedium  disk ${UNUSED_VMDK_UUID} --delete
+if [ "x${UNUSED_VMDK_UUID}" -ne "x" ]
+then
+    VBoxManage closemedium  disk ${UNUSED_VMDK_UUID} --delete
+fi
 
 rm -f ${VM_NAME}.ova
 VBoxManage export ${VB_UUID} -o ${VM_NAME}.ova
