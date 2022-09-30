@@ -35,6 +35,13 @@ apt-get install -y virtualbox-guest-utils virtualbox-guest-x11
 apt-get install -y open-vm-tools open-vm-tools-desktop
 
 
+# Guest OS tools for QEMU
+#https://www.snel.com/support/nstall-qemu-guest-agent-for-debian-ubuntu/
+#apt-get install -y qemu-guest-agent
+#systemctl enable qemu-guest-agent
+#systemctl start qemu-guest-agent
+
+
 # Install basic tools for C/C++ development
 apt-get install -y gcc-multilib g++-multilib \
                    git \
