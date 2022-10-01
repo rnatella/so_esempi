@@ -166,6 +166,9 @@ EOF
 groupadd docker
 usermod -a -G docker so
 
+chown root:root /usr/local/bin/docker-compose*
+chmod a+r /usr/local/bin/docker-compose*
+
 
 # Install PowerShell
 apt-get install -y wget apt-transport-https software-properties-common
