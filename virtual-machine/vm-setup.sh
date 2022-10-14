@@ -226,6 +226,13 @@ perl -p -i -e 's/^(PICTURES=)/#$1/' /etc/xdg/user-dirs.defaults
 perl -p -i -e 's/^(VIDEOS=)/#$1/' /etc/xdg/user-dirs.defaults
 
 
+
+# Enable password authentication with SSHd
+perl -p -i -e 's/PasswordAuthentication\s\w+/PasswordAuthentication yes/' /etc/ssh/sshd_config
+perl -p -i -e 's/ChallengeResponseAuthentication\s\w+/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
+
+
+
 # Install "dbus-launch" (to change the GNOME settings)
 apt-get install -y dbus-x11
 
