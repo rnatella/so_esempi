@@ -1,10 +1,14 @@
 #!/bin/bash
 
-wget -q -r --no-parent -nH --cut-dirs=3 \
-		https://people.sc.fsu.edu/~jburkardt/data/jpg/
+URL="https://people.sc.fsu.edu/~jburkardt/data/jpg/"
 
-for F in *.jpg
-do 
+mkdir -p ./immagini/
+
+wget -r --no-parent -nH --cut-dirs=3 -P ./immagini/ $URL
+
+for F in immagini/*.jpg
+do
+  echo "Conversione di $F"
   convert "$F" "$F.png" &
 done
 
