@@ -104,6 +104,7 @@ snap install teams-for-linux
 apt-get install -y cgroup-tools \
                    openjdk-11-jdk \
                    pdftk-java \
+                   poppler-utils \
                    imagemagick \
                    python3-tk \
                    mathomatic-primes
