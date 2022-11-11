@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
 
@@ -32,7 +33,7 @@ int main() {
 
         printf("Avvio processo server\n");
 
-        execl("./server", NULL);
+        execl("./server", "server", NULL);
 
         perror("Errore exec server");
         exit(1);
@@ -45,7 +46,7 @@ int main() {
 
         printf("Avvio processo client\n");
 
-        execl("./client", NULL);
+        execl("./client", "client", NULL);
 
         perror("Errore exec client");
         exit(1);
