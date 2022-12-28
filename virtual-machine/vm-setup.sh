@@ -75,6 +75,7 @@ su - so -c 'echo "set schedule-multiple on" >> /home/so/.gdbinit'
 apt-get install -y fonts-ubuntu \
                    curl \
                    wget \
+                   tree \
                    net-tools \
                    network-manager \
                    network-manager-gnome \
@@ -123,7 +124,9 @@ apt-get install -y php-cli \
                    ufw \
                    nmap \
                    sqlmap \
-                   wireshark
+                   wireshark \
+                   tshark \
+                   python3-venv
 
 
 systemctl disable apache2
@@ -316,6 +319,16 @@ echo > /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 
 netplan generate
 netplan apply
+
+
+# Widget for showing IP address
+sudo add-apt-repository ppa:nico-marcq/indicator-ip
+sudo apt-get update
+sudo apt-get install python3-indicator-ip gir1.2-appindicator3-0.1
+
+
+# GRUB vanilla defaults
+rm /etc/default/grub.d/50-cloudimg-settings.cfg
 
 
 shutdown -r now
