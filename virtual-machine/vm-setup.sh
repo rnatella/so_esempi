@@ -76,6 +76,7 @@ apt-get install -y fonts-ubuntu \
                    curl \
                    wget \
                    tree \
+                   dos2unix \
                    net-tools \
                    network-manager \
                    network-manager-gnome \
@@ -137,7 +138,9 @@ snap install zaproxy --classic
 snap install hetty
 
 pip3 install pwntools
+pip3 install flask
 
+apt install python3-requests python3-bs4
 
 
 
@@ -154,7 +157,8 @@ cat <<EOF >/home/so/.config/Code/User/settings.json
     "security.workspace.trust.enabled": false,
     "files.exclude": {
         "**/.vscode": true
-    }
+    },
+    "extensions.ignoreRecommendations": true
 }
 EOF
 
