@@ -326,14 +326,23 @@ netplan apply
 
 
 # Widget for showing IP address
-sudo add-apt-repository ppa:nico-marcq/indicator-ip
-sudo apt-get update
-sudo apt-get install python3-indicator-ip gir1.2-appindicator3-0.1
+add-apt-repository -y ppa:nico-marcq/indicator-ip
+apt-get update
+apt-get install python3-indicator-ip gir1.2-appindicator3-0.1
 
 
 # GRUB vanilla defaults
 rm /etc/default/grub.d/50-cloudimg-settings.cfg
 
+
+# Disable automatic updates for Ubuntu (to prevent that they break the labs)
+# https://askubuntu.com/questions/1322292/how-do-i-turn-off-automatic-updates-completely-and-for-real
+cat <<EOF >/etc/apt/apt.conf.d/20auto-upgrades
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Download-Upgradeable-Packages "0";
+APT::Periodic::AutocleanInterval "0";
+APT::Periodic::Unattended-Upgrade "0";
+EOF
 
 shutdown -r now
 
