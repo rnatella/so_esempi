@@ -55,6 +55,7 @@ apt-get install -y gcc-multilib g++-multilib \
                    llvm \
                    lldb \
                    clang \
+                   glibc-tools \
                    glibc-source
 
 #cd /usr/src/glibc
