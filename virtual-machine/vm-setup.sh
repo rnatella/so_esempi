@@ -78,6 +78,7 @@ apt-get install -y fonts-ubuntu \
                    wget \
                    tree \
                    dos2unix \
+                   expect \
                    net-tools \
                    network-manager \
                    network-manager-gnome \
@@ -140,6 +141,7 @@ snap install hetty
 
 pip3 install pwntools
 pip3 install flask
+pip3 install semgrep
 
 apt install python3-requests python3-bs4
 
@@ -157,7 +159,10 @@ cat <<EOF >/home/so/.config/Code/User/settings.json
 {
     "security.workspace.trust.enabled": false,
     "files.exclude": {
-        "**/.vscode": true
+        "**/.vscode": true,
+        "**/.git": true,
+        "**/.github": true,
+        "**/.test": true
     },
     "extensions.ignoreRecommendations": true
 }
