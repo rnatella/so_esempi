@@ -210,9 +210,16 @@ apt-get install -y linux-tools-$(uname -r)
 
 # Install password manager for GIT
 apt-get install -y libsecret-tools libsecret-common libsecret-1-0 libsecret-1-dev
-wget https://github.com/GitCredentialManager/git-credential-manager/releases/download/v2.0.785/gcm-linux_amd64.2.0.785.deb
-dpkg -i gcm-linux_amd64.2.0.785.deb
-rm -f gcm-linux_*.deb
+
+# fixes: https://stackoverflow.com/questions/73312785/dotnet-sdk-is-installed-but-not-recognized-linux-ubuntu-popos-22-04
+apt -y remove 'dotnet*'
+apt -y remove 'aspnetcore*'
+rm /etc/apt/sources.list.d/microsoft-prod.list
+apt update
+
+curl -L https://aka.ms/gcm/linux-install-source.sh -O
+bash linux-install-source.sh -y
+rm -f linux-install-source.sh
 
 su - so -c 'git-credential-manager-core configure'
 su - so -c 'git config --global credential.credentialStore secretservice'
