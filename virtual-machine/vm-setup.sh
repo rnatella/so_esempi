@@ -143,7 +143,7 @@ pip3 install pwntools
 pip3 install flask
 pip3 install semgrep
 
-apt install python3-requests python3-bs4
+apt -y install python3-requests python3-bs4
 
 
 
@@ -221,8 +221,9 @@ curl -L https://aka.ms/gcm/linux-install-source.sh -O
 bash linux-install-source.sh -y
 rm -f linux-install-source.sh
 
-su - so -c 'git-credential-manager-core configure'
-su - so -c 'git config --global credential.credentialStore secretservice'
+su - so -c 'git-credential-manager configure'
+#su - so -c 'git config --global credential.credentialStore secretservice'
+su - so -c 'git config --global credential.credentialStore cache'
 
 
 # Install tools and sources for compiling the Linux kernel
