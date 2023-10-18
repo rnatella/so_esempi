@@ -67,7 +67,7 @@ void produttore(struct prodcons * p, int ds_sem) {
 	// genera valore tra 0 e 99
 	p->buffer[p->testa] = rand() % 100;
 
-	printf("Il valore prodotto = %d\n", p->buffer[p->testa]);
+	printf("[PROD %d] Il valore prodotto = %d\n", getpid(), p->buffer[p->testa]);
 
 	p->testa = (p->testa+1) % DIM_BUFFER;
 
@@ -88,7 +88,7 @@ void consumatore(struct prodcons * p, int ds_sem) {
 
 	sleep(2);
 
-	printf("Il valore consumato = %d\n", p->buffer[p->coda]);
+	printf("[CONS %d] Il valore consumato = %d\n", getpid(), p->buffer[p->coda]);
 
 	p->coda = (p->coda + 1) % DIM_BUFFER;
 
@@ -105,7 +105,10 @@ int main() {
 
 	int ds_shm = shmget(chiave, sizeof(struct prodcons), IPC_CREAT|0664);
 
-	if(ds_shm<0) { perror("SHM errore"); exit(1); }
+	if(ds_shm<0) {
+		perror("SHM errore");
+		exit(1);
+	}
 
 	struct prodcons * p;
 
@@ -120,7 +123,10 @@ int main() {
 
 	int ds_sem = semget(chiavesem, 4, IPC_CREAT|0664);
 
-	if(ds_sem<0) { perror("SEM errore"); exit(1); }
+	if(ds_sem<0) {
+		perror("SEM errore");
+		exit(1);
+	}
 
 	
 
@@ -148,6 +154,7 @@ int main() {
 
 			consumatore(p, ds_sem);
 
+			printf("Figlio consumatore terminato: %d\n", getpid());
 			exit(1);
 		}
 	}
@@ -171,21 +178,16 @@ int main() {
 			srand(getpid()*time(NULL));
 
 			produttore(p, ds_sem);
-
+			
+			printf("Figlio produttore terminato: %d\n", getpid());
 			exit(1);
 		}
 	}
 
 
 
-	for(int i=0; i<NUM_PRODUTTORI; i++) {
+	for(int i=0; i<(NUM_PRODUTTORI + NUM_CONSUMATORI); i++) {
 		wait(NULL);
-		printf("Figlio produttore terminato\n");
-	}
-
-	for(int i=0; i<NUM_CONSUMATORI; i++) {
-		wait(NULL);
-		printf("Figlio consumatore terminato\n");
 	}
 
 

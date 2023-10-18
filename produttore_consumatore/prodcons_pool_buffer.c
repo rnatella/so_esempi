@@ -79,7 +79,7 @@ void produttore(struct prodcons * p, int ds_sem) {
 	// genera valore tra 0 e 99
 	p->buffer[indice] = rand() % 100;
 
-	printf("Il valore prodotto = %d\n", p->buffer[indice]);
+	printf("[PROD %d] Il valore prodotto = %d\n", getpid(), p->buffer[indice]);
 
 
 	p->stato[indice] = BUFFER_PIENO;
@@ -108,7 +108,7 @@ void consumatore(struct prodcons * p, int ds_sem) {
 
 	sleep(2);
 
-	printf("Il valore consumato = %d\n", p->buffer[indice]);
+	printf("[CONS %d] Il valore consumato = %d\n", getpid(), p->buffer[indice]);
 
 
 	p->stato[indice] = BUFFER_VUOTO;
@@ -130,7 +130,7 @@ int main() {
 	p = (struct prodcons *) shmat(ds_shm, NULL, 0);
 
 
-	for(int i=0; i<DIM_BUFFER; i++) {
+	for(int i=0; i<DIM_BUFFER; ++i) {
 		p->stato[i] = BUFFER_VUOTO;
 	}
 
@@ -151,7 +151,7 @@ int main() {
 
 
 
-	for(int i=0; i<NUM_CONSUMATORI; i++) {
+	for(int i=0; i<NUM_CONSUMATORI; ++i) {
 
 		int pid = fork();
 
@@ -168,6 +168,7 @@ int main() {
 
 			consumatore(p, ds_sem);
 
+			printf("Figlio consumatore terminato: %d\n", getpid());
 			exit(1);
 		}
 	}
@@ -175,7 +176,7 @@ int main() {
 
 
 
-	for(int i=0; i<NUM_PRODUTTORI; i++) {
+	for(int i=0; i<NUM_PRODUTTORI; ++i) {
 
 		int pid = fork();
 
@@ -192,20 +193,15 @@ int main() {
 
 			produttore(p, ds_sem);
 
+			printf("Figlio produttore terminato: %d\n", getpid());
 			exit(1);
 		}
 	}
 
 
 
-	for(int i=0; i<NUM_PRODUTTORI; i++) {
+	for(int i=0; i< ( NUM_PRODUTTORI + NUM_CONSUMATORI ); ++i) {
 		wait(NULL);
-		printf("Figlio produttore terminato\n");
-	}
-
-	for(int i=0; i<NUM_CONSUMATORI; i++) {
-		wait(NULL);
-		printf("Figlio consumatore terminato\n");
 	}
 
 
