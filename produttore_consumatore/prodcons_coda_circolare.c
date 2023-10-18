@@ -105,7 +105,10 @@ int main() {
 
 	int ds_shm = shmget(chiave, sizeof(struct prodcons), IPC_CREAT|0664);
 
-	if(ds_shm<0) { perror("SHM errore"); exit(1); }
+	if(ds_shm<0) {
+		perror("SHM errore");
+		exit(1);
+	}
 
 	struct prodcons * p;
 
@@ -120,7 +123,10 @@ int main() {
 
 	int ds_sem = semget(chiavesem, 4, IPC_CREAT|0664);
 
-	if(ds_sem<0) { perror("SEM errore"); exit(1); }
+	if(ds_sem<0) {
+		perror("SEM errore");
+		exit(1);
+	}
 
 	
 
@@ -131,7 +137,7 @@ int main() {
 
 
 
-	for(int i=0; i<NUM_CONSUMATORI; ++i) {
+	for(int i=0; i<NUM_CONSUMATORI; i++) {
 
 		int pid = fork();
 
@@ -156,7 +162,7 @@ int main() {
 
 
 
-	for(int i=0; i<NUM_PRODUTTORI; ++i) {
+	for(int i=0; i<NUM_PRODUTTORI; i++) {
 
 		int pid = fork();
 
@@ -180,7 +186,7 @@ int main() {
 
 
 
-	for(int i=0; i< (NUM_PRODUTTORI + NUM_CONSUMATORI); ++i) {
+	for(int i=0; i<(NUM_PRODUTTORI + NUM_CONSUMATORI); i++) {
 		wait(NULL);
 	}
 
