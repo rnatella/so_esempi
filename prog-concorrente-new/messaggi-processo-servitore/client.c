@@ -39,6 +39,7 @@ int main() {
 
     richiesta.tipo = ACCENDI;
 
+    printf("\n");
     printf("[CLIENT] Invio richiesta di accensione\n");
 
     SendAsincr(coda_richieste, &richiesta);
@@ -51,6 +52,7 @@ int main() {
 
     richiesta.tipo = LEGGI;
 
+    printf("\n");
     printf("[CLIENT] Invio richiesta di lettura\n");
 
     SendAsincr(coda_richieste, &richiesta);
@@ -69,6 +71,7 @@ int main() {
 
     richiesta.tipo = SPEGNI;
 
+    printf("\n");
     printf("[CLIENT] Invio richiesta di spegnimento\n");
 
     SendAsincr(coda_richieste, &richiesta);
@@ -81,6 +84,7 @@ int main() {
 
     richiesta.tipo = TERMINA;
 
+    printf("\n");
     printf("[CLIENT] Invio richiesta di terminazione\n");
 
     SendAsincr(coda_richieste, &richiesta);
