@@ -1,4 +1,5 @@
-				/*-----HEADER FILE----*/
+#ifndef _HEADER_
+#define _HEADER_
 
 #define REQUEST_TO_SEND 1
 #define OK_TO_SEND 2
@@ -14,6 +15,7 @@ void SendSincr (int queue, char * text);
 void initServiceQueues();
 void removeServiceQueues();
 
-void Produttore(int queue);
-void Consumatore(int queue);
+void Mittente(int queue);
+void Ricevente(int queue);
 
+#endif

@@ -6,9 +6,10 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
+
 #include "header.h"
 
-static int queue_rts; // "static" poichè non è necessaria la loro visibilità fuori dal modulo
+static int queue_rts; // "static" previene la loro visibilità al di fuori del modulo
 static int queue_ots;
 
 // inizializzazione code di servizio
