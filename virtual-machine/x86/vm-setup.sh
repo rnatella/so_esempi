@@ -342,7 +342,7 @@ netplan apply
 # Widget for showing IP address
 add-apt-repository -y ppa:nico-marcq/indicator-ip
 apt-get update
-apt-get install python3-indicator-ip gir1.2-appindicator3-0.1
+apt-get -y install python3-indicator-ip gir1.2-appindicator3-0.1
 
 
 # GRUB vanilla defaults
