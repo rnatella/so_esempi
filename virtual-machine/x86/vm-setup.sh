@@ -214,7 +214,7 @@ apt-get install -y libsecret-tools libsecret-common libsecret-1-0 libsecret-1-de
 # fixes: https://stackoverflow.com/questions/73312785/dotnet-sdk-is-installed-but-not-recognized-linux-ubuntu-popos-22-04
 apt -y remove 'dotnet*'
 apt -y remove 'aspnetcore*'
-rm /etc/apt/sources.list.d/microsoft-prod.list
+rm -f /etc/apt/sources.list.d/microsoft-prod.list
 apt update
 
 curl -L https://aka.ms/gcm/linux-install-source.sh -O
@@ -222,8 +222,8 @@ bash linux-install-source.sh -y
 rm -f linux-install-source.sh
 
 su - so -c 'git-credential-manager configure'
-#su - so -c 'git config --global credential.credentialStore secretservice'
-su - so -c 'git config --global credential.credentialStore cache'
+su - so -c 'git config --global credential.credentialStore secretservice'
+#su - so -c 'git config --global credential.credentialStore cache'
 
 
 # Install tools and sources for compiling the Linux kernel
