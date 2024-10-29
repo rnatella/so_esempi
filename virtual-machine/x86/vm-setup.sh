@@ -94,6 +94,7 @@ apt-get install -y fonts-ubuntu \
                    gedit \
                    gnome-system-monitor \
                    gnome-logs \
+                   seahorse \
                    eog \
                    eog-plugins
 
@@ -144,6 +145,8 @@ pip3 install flask
 pip3 install semgrep
 
 apt -y install python3-requests python3-bs4
+
+pip3 install --upgrade requests
 
 
 
@@ -222,7 +225,8 @@ bash linux-install-source.sh -y
 rm -f linux-install-source.sh
 
 su - so -c 'git-credential-manager configure'
-su - so -c 'git config --global credential.credentialStore secretservice'
+su - so -c 'git config --global credential.credentialStore plaintext'
+#su - so -c 'git config --global credential.credentialStore secretservice'
 #su - so -c 'git config --global credential.credentialStore cache'
 
 

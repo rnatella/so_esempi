@@ -92,6 +92,7 @@ apt-get install -y fonts-ubuntu \
                    gedit \
                    gnome-system-monitor \
                    gnome-logs \
+                   seahorse \
                    eog \
                    eog-plugins
 
@@ -227,7 +228,8 @@ apt -y install ./gcm-linux_arm64.2.4.1.deb
 rm ./gcm-linux_arm64.2.4.1.deb
 
 su - so -c 'git-credential-manager configure'
-su - so -c 'git config --global credential.credentialStore secretservice'
+su - so -c 'git config --global credential.credentialStore plaintext'
+#su - so -c 'git config --global credential.credentialStore secretservice'
 #su - so -c 'git config --global credential.credentialStore cache'
 
 
