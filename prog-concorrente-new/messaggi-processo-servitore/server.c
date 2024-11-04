@@ -13,17 +13,20 @@
 /* (è accessibile solo dal server)  */
 /************************************/
 
-struct caldaia {
+#define SPENTA 0
+#define ACCESA 1
 
-    enum { SPENTA, ACCESA } stato;
+struct risorsa {
+
+    int stato;
 
 };
 
-struct caldaia caldaia = { SPENTA };
-
-int leggi_temperatura(struct caldaia * caldaia);
+struct risorsa caldaia = { SPENTA };
 
 
+
+int leggi_temperatura(struct risorsa * caldaia);
 
 int main() {
 
@@ -48,6 +51,8 @@ int main() {
 
 
     /* Il server itera indefinitamente */
+
+    srand(getpid());
 
     while(1) {
 
@@ -103,7 +108,7 @@ int main() {
 }
 
 
-int leggi_temperatura(struct caldaia * caldaia) {
+int leggi_temperatura(struct risorsa * caldaia) {
 
     int temp;
 
