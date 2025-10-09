@@ -156,6 +156,15 @@ void signal_condition(Monitor* M,int id_var){
 
 }
 
+void signal_all(Monitor* M, int id_var) {
+	while (M->cond_counts[id_var] > 0) {
+		M->cond_counts[id_var]--;
+		#ifdef DEBUG_
+    		printf("<%d> -Monitor- signal sul semaforo %d\n", getpid(), id_var);
+		#endif
+		Signal_Sem(M->id_conds,id_var);
+	}
+}
 
 int queue_condition(Monitor * M, int id_var){
 	return M->cond_counts[id_var];

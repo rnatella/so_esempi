@@ -28,6 +28,7 @@ void leave_monitor(Monitor*);
 void remove_monitor(Monitor*);
 void wait_condition(Monitor*,int);
 void signal_condition(Monitor*,int);
+void signal_all(Monitor*,int);
 int queue_condition(Monitor*,int); 
 
 
